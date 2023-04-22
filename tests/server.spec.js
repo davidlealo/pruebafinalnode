@@ -27,10 +27,18 @@ describe("Operaciones CRUD de cafes", () => {
         //Tercer requerimiento
         it('la ruta POST /cafes agrega un nuevo café y devuelve un código 201', async ()=>{
             const nuevoCafe = {id: 5, nombre : 'Nuevo Café'}
-            respuesta = await request(server).post("/cafes").send(nuevoCafe)
+            respuesta = await request(server).post('/cafes').send(nuevoCafe)
             const status = respuesta.statusCode
             expect(status).toBe(201)
             expect(respuesta.body).toContainEqual(nuevoCafe)
+        })
+
+         //Cuarto requerimiento
+         it('la ruta PUT /cafes devuelve un status code 400 si intentas actualizar un café enviando un id en los parámetros que sea diferente al id dentro del payload', async ()=>{
+            const cafe = { id: 4, nombre: 'Café actualizado' };
+            const id = 6;
+            const respuesta = await request(server).delete(`/cafes/:${id}`).send(cafe);
+            expect(respuesta.statusCode).toBe(400);
         })
 
 });
