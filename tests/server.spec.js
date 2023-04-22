@@ -18,10 +18,19 @@ describe("Operaciones CRUD de cafes", () => {
     })
 
         //Segundo requerimiento
-        it("Comprueba que se obtiene un código 404 al intentar eliminar un café con un id que no existe", async () => {
+        it('Comprueba que se obtiene un código 404 al intentar eliminar un café con un id que no existe', async () => {
             const id = 11;
-            const response = await request(server).delete(`/cafes/:${id}`).set("Authorization", "token").send();
-            expect(response.statusCode).toBe(404);
+            const respuesta = await request(server).delete(`/cafes/:${id}`).set('Authorization', 'token').send();
+            expect(respuesta.statusCode).toBe(404);
+        })
+        
+        //Tercer requerimiento
+        it('la ruta POST /cafes agrega un nuevo café y devuelve un código 201', async ()=>{
+            const nuevoCafe = {id: 5, nombre : 'Nuevo Café'}
+            respuesta = await request(server).post("/cafes").send(nuevoCafe)
+            const status = respuesta.statusCode
+            expect(status).toBe(201)
+            expect(respuesta.body).toContainEqual(nuevoCafe)
         })
 
 });
